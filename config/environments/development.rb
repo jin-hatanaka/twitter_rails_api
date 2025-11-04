@@ -35,10 +35,20 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # メール送信失敗時にエラーを出すかの設定
+  config.action_mailer.raise_delivery_errors = true
 
+  # メール内容をキャッシュするかの設定
   config.action_mailer.perform_caching = false
+
+  # メール内のリンクで使うURLを指定する設定
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # メールの送信方法を設定
+  config.action_mailer.delivery_method = :letter_opener_web
+
+  # 実際にメール送信処理を行うかの設定
+  config.action_mailer.perform_deliveries = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
