@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       mount_devise_token_auth_for 'User', at: 'users', controllers: {
         registrations: 'api/v1/registrations'
       }
+      resources :tweets, only: %i[index show create destroy]
+      resources :images, only: %i[create]
     end
   end
 end
