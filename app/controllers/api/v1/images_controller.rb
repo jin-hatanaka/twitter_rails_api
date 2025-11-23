@@ -3,10 +3,11 @@
 module Api
   module V1
     class ImagesController < ApplicationController
+      before_action :authenticate_api_v1_user!
+
       def create
-        # content なし、user_id だけで空の Tweet を作成
-        tweet = current_api_v1_user.tweets.build(content: '')
-        tweet.save!
+        # すでに作られているtweetを検索
+        tweet = Tweet.find(params[:tweet_id])
 
         # 画像は複数想定
         params[:images]&.each do |image|
