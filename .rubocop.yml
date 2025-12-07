@@ -14,3 +14,6 @@ Metrics/AbcSize:
   Max: 30
 Metrics/MethodLength:
   Max: 35
+Hc/RailsSpecificActionName:
+  Exclude:
+    - app/controllers/api/v1/users_controller.rb

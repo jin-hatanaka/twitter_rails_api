@@ -5,17 +5,50 @@ module Api
     class TweetsController < ApplicationController
       before_action :authenticate_api_v1_user!
 
+      def index
+        # limitは1ページあたりの最大表示件数
+        # offsetは取得を開始するデータの一番最初の位置（スキップする件数）
+        limit = params[:limit].to_i
+        offset = params[:offset].to_i
+
+        tweets = Tweet
+                 .order(created_at: 'DESC')
+                 .includes(images_attachments: :blob, user: { icon_image_attachment: :blob })
+                 .limit(limit)
+                 .offset(offset)
+
+        render json: {
+          tweets: format_json(tweets),
+          count: Tweet.count
+        }
+      end
+
       def create
         tweet = current_api_v1_user.tweets.build(content: params[:content])
 
         if tweet.save
           render json: {
-            tweet_id: tweet.id,
+            id: tweet.id,
             content: tweet.content,
-            created_at: tweet.created_at
+            createdAt: tweet.created_at
           }, status: :created
         else
           render json: tweet.errors, status: :unprocessable_entity
+        end
+      end
+
+      private
+
+      def format_json(tweets)
+        tweets.map do |tweet|
+          {
+            id: tweet.id,
+            content: tweet.content,
+            createdAt: tweet.created_at,
+            images: tweet.image_urls,
+            user: tweet.user,
+            iconImage: tweet.user.icon_image_url
+          }
         end
       end
     end

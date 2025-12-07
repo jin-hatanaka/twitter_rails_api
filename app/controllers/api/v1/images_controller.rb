@@ -15,7 +15,7 @@ module Api
         end
 
         render json: {
-          tweet_id: tweet.id,
+          tweetId: tweet.id,
           # url_for は Rails のヘルパーで、ActiveStorage の画像を実際にアクセスできるURLに変換する
           images: tweet.images.map { |img| url_for(img) }
         }, status: :created
