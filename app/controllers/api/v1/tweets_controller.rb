@@ -23,6 +23,18 @@ module Api
         }
       end
 
+      def show
+        tweet = Tweet.find(params[:id])
+        render json: {
+          id: tweet.id,
+          content: tweet.content,
+          createdAt: tweet.created_at,
+          images: tweet.image_urls(564, 300),
+          user: tweet.user,
+          iconImage: tweet.user.icon_image_url
+        }
+      end
+
       def create
         tweet = current_api_v1_user.tweets.build(content: params[:content])
 
@@ -45,7 +57,7 @@ module Api
             id: tweet.id,
             content: tweet.content,
             createdAt: tweet.created_at,
-            images: tweet.image_urls,
+            images: tweet.image_urls(516, 280),
             user: tweet.user,
             iconImage: tweet.user.icon_image_url
           }
