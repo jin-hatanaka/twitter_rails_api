@@ -31,7 +31,7 @@ module Api
           createdAt: tweet.created_at,
           images: tweet.image_urls(564, 300),
           user: tweet.user,
-          iconImage: tweet.user.icon_image_url
+          iconImage: tweet.user.icon_image_url(40, 40)
         }
       end
 
@@ -59,7 +59,7 @@ module Api
             createdAt: tweet.created_at,
             images: tweet.image_urls(516, 280),
             user: tweet.user,
-            iconImage: tweet.user.icon_image_url
+            iconImage: tweet.user.icon_image_url(40, 40)
           }
         end
       end
