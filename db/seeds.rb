@@ -13,10 +13,15 @@ user1 = User.new(
   name: 'user1',
   email: 'user1@gmail.com',
   birth_date: '2025-01-01',
-  password: '000000'
+  password: '000000',
+  self_introduction: "未経験からWeb系エンジニアに転職するため勉強してます！\nHappinessChain で勉強中",
+  place: '大阪',
+  website: 'https://github.com/jin-hatanaka'
 )
 user1.icon_image.attach(io: Rails.root.join('db/seeds/icon1.png').open,
                         filename: 'icon1.png')
+user1.header_image.attach(io: Rails.root.join('db/seeds/header1.png').open,
+                          filename: 'header1.png')
 user1.skip_confirmation!
 user1.save!
 

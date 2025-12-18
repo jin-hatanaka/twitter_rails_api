@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
   has_many :tweets, dependent: :destroy
   has_one_attached :icon_image
+  has_one_attached :header_image
 
   # フォローする側からのhas_many
   has_many :relationships, foreign_key: :following_id, dependent: :destroy,
@@ -23,9 +24,17 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_of_relationships, source: :following
 
   # アイコン画像のURL変換メソッド
-  def icon_image_url
+  def icon_image_url(width, height)
     # Rails.application.routes.url_helpers.rails_blob_url(icon_image, only_path: false)
-    resize_image = icon_image.variant(resize_to_fill: [40, 40]).processed
+    resize_image = icon_image.variant(resize_to_fill: [width, height]).processed
+    Rails.application.routes.url_helpers.url_for(resize_image)
+  end
+
+  # ヘッダー画像のURL変換メソッド
+  def header_image_url
+    return unless header_image.attached?
+
+    resize_image = header_image.variant(resize_to_fill: [600, 200]).processed
     Rails.application.routes.url_helpers.url_for(resize_image)
   end
 end
