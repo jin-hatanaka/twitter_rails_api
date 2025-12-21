@@ -53,7 +53,7 @@ module Api
         tweet = Tweet.find(params[:id])
         # head でステータスコードのみ返す
         return head :not_found unless tweet
-        return head :forbidden unless tweet.user.id === current_api_v1_user.id
+        return head :forbidden unless tweet.user.id == current_api_v1_user.id
 
         tweet.destroy
         head :no_content
