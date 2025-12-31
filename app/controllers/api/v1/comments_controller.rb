@@ -27,6 +27,15 @@ module Api
         end
       end
 
+      def destroy
+        comment = Comment.find_by(id: params[:id])
+        return head :not_found unless comment
+        return head :forbidden unless comment.user.id == current_api_v1_user.id
+
+        comment.destroy
+        head :no_content
+      end
+
       private
 
       def format_comments(comments)
