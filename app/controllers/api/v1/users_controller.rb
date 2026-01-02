@@ -21,6 +21,8 @@ module Api
         tweets = user.tweets
                      .includes(images_attachments: :blob)
                      .order(created_at: 'DESC')
+        comments = user.comments
+                       .order(created_at: 'DESC')
         render json: {
           user: {
             id: user.id,
@@ -34,8 +36,9 @@ module Api
             iconImage: user.icon_image_url(132, 132),
             headerImage: user.header_image_url
           },
-          tweets: format_json(tweets),
-          tweetCount: tweets.count
+          tweets: format_tweets(tweets),
+          tweetCount: tweets.count,
+          comments: format_comments(comments)
         }
       end
 
@@ -54,7 +57,7 @@ module Api
 
       private
 
-      def format_json(tweets)
+      def format_tweets(tweets)
         tweets.map do |tweet|
           {
             id: tweet.id,
@@ -63,6 +66,18 @@ module Api
             images: tweet.image_urls(516, 280),
             user: tweet.user,
             iconImage: tweet.user.icon_image_url(40, 40)
+          }
+        end
+      end
+
+      def format_comments(comments)
+        comments.map do |comment|
+          {
+            id: comment.id,
+            content: comment.content,
+            createdAt: comment.created_at,
+            user: comment.user,
+            iconImage: comment.user.icon_image_url(40, 40)
           }
         end
       end
