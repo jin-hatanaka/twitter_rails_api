@@ -26,7 +26,6 @@ class User < ApplicationRecord
 
   # アイコン画像のURL変換メソッド
   def icon_image_url(width, height)
-    # Rails.application.routes.url_helpers.rails_blob_url(icon_image, only_path: false)
     resize_image = icon_image.variant(resize_to_fill: [width, height]).processed
     Rails.application.routes.url_helpers.url_for(resize_image)
   end
