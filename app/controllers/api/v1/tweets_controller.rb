@@ -69,7 +69,9 @@ module Api
             createdAt: tweet.created_at,
             images: tweet.image_urls(516, 280),
             user: tweet.user,
-            iconImage: tweet.user.icon_image_url(40, 40)
+            iconImage: tweet.user.icon_image_url(40, 40),
+            retweetCount: tweet.retweets.count,
+            isRetweeted: tweet.retweets.exists?(user_id: current_api_v1_user)
           }
         end
       end
