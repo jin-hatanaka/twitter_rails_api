@@ -71,7 +71,9 @@ module Api
             user: tweet.user,
             iconImage: tweet.user.icon_image_url(40, 40),
             retweetCount: tweet.retweets.count,
-            isRetweeted: tweet.retweets.exists?(user_id: current_api_v1_user)
+            isRetweeted: tweet.retweets.exists?(user_id: current_api_v1_user),
+            likeCount: tweet.likes.count,
+            isLiked: tweet.likes.exists?(user_id: current_api_v1_user)
           }
         end
       end
