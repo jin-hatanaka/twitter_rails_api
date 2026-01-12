@@ -21,7 +21,10 @@ Rails.application.routes.draw do
         resource :likes, only: %i[create destroy]
       end
       resources :images, only: %i[create]
-      resources :users, only: %i[show update]
+      resources :users, only: %i[show update] do
+        post 'follow', to: 'relationships#create'
+        delete 'unfollow', to: 'relationships#destroy'
+      end
       resources :comments, only: %i[create destroy]
     end
   end

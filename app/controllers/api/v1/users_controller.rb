@@ -33,6 +33,7 @@ module Api
             website: user.website,
             followCount: user.followings.count,
             followerCount: user.followers.count,
+            isFollowed: user.reverse_of_relationships.exists?(following_id: current_api_v1_user),
             iconImage: user.icon_image_url(132, 132),
             headerImage: user.header_image_url
           },
