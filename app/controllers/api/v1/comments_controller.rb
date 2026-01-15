@@ -19,8 +19,11 @@ module Api
           tweet_id: params[:tweet_id],
           content: params[:content]
         )
+        tweet = Tweet.find(params[:tweet_id])
 
         if comment.save
+          # 通知作成メソッドの呼び出し
+          tweet.create_notification!(current_api_v1_user, 'comment', comment_id: comment.id)
           render json: comment, status: :created
         else
           render json: comment.error, status: :unprocessable_entity

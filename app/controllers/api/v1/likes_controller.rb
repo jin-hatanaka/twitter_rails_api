@@ -5,8 +5,11 @@ module Api
     class LikesController < ApplicationController
       def create
         like = current_api_v1_user.likes.build(tweet_id: params[:tweet_id])
+        tweet = Tweet.find(params[:tweet_id])
 
         if like.save
+          # 通知作成メソッドの呼び出し
+          tweet.create_notification!(current_api_v1_user, 'like')
           render josn: like, status: :created
         else
           render json: like.error, status: :unprocessable_entity

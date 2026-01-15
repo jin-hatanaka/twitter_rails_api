@@ -5,8 +5,11 @@ module Api
     class RelationshipsController < ApplicationController
       def create
         follow = current_api_v1_user.relationships.build(follower_id: params[:user_id])
+        user = User.find(params[:user_id])
 
         if follow.save
+          # 通知作成メソッドの呼び出し
+          user.create_notification_follow!(current_api_v1_user)
           render josn: follow, status: :created
         else
           render json: follow.error, status: :unprocessable_entity

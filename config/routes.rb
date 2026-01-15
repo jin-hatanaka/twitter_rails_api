@@ -26,6 +26,7 @@ Rails.application.routes.draw do
         delete 'unfollow', to: 'relationships#destroy'
       end
       resources :comments, only: %i[create destroy]
+      resources :notifications, only: %i[index]
     end
   end
 end

@@ -26,6 +26,14 @@ class User < ApplicationRecord
   # 一覧画面で使用する（あるユーザーのフォロワー全員をとってくる）
   has_many :followers, through: :reverse_of_relationships, source: :following
 
+  # 通知を送る側からのhas_many
+  has_many :active_notifications, class_name: 'Notification', foreign_key: 'visitor_id', dependent: :destroy,
+                                  inverse_of: :visitor
+
+  # 通知を受け取る側からのhas_mamy
+  has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy,
+                                   inverse_of: :visited
+
   # アイコン画像のURL変換メソッド
   def icon_image_url(width, height)
     resize_image = icon_image.variant(resize_to_fill: [width, height]).processed
@@ -38,5 +46,18 @@ class User < ApplicationRecord
 
     resize_image = header_image.variant(resize_to_fill: [600, 200]).processed
     Rails.application.routes.url_helpers.url_for(resize_image)
+  end
+
+  def create_notification_follow!(current_user)
+    # フォローされているか検索
+    tmp = current_user.active_notifications.where(visited_id: id, action: 'follow')
+    # フォローされている場合は処理を終了
+    return if tmp.present?
+
+    notification = current_user.active_notifications.new(
+      visited_id: id,
+      action: 'follow'
+    )
+    notification.save if notification.valid?
   end
 end
