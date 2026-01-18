@@ -49,14 +49,12 @@ class User < ApplicationRecord
   end
 
   def create_notification_follow!(current_user)
-    # フォローされているか検索
-    tmp = current_user.active_notifications.where(visited_id: id, action: 'follow')
     # フォローされている場合は処理を終了
-    return if tmp.present?
+    return if current_user.active_notifications.exists?(visited_id: id, action: :follow)
 
     notification = current_user.active_notifications.new(
       visited_id: id,
-      action: 'follow'
+      action: :follow
     )
     notification.save if notification.valid?
   end

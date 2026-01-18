@@ -7,7 +7,7 @@ class CreateNotifications < ActiveRecord::Migration[7.0]
       t.references :visited, null: false, foreign_key: { to_table: :users }
       t.references :tweet, foreign_key: true
       t.references :comment, foreign_key: true
-      t.string :action, default: '', null: false
+      t.integer :action, default: 0, null: false
       t.boolean :checked, default: false, null: false
 
       t.timestamps

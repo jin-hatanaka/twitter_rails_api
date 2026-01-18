@@ -17,10 +17,8 @@ class Tweet < ApplicationRecord
   end
 
   def create_notification!(current_user, action, comment_id: nil)
-    # いいねされているか検索
-    tmp = current_user.active_notifications.where(visited_id: user_id, tweet_id: id, action: 'like')
     # いいねされている場合は処理を終了
-    return if tmp.present?
+    return if action == :like && current_user.active_notifications.exists?(visited_id: user_id, tweet_id: id, action: :like)
 
     notification = current_user.active_notifications.new(
       visited_id: user_id,

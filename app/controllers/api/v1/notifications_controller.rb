@@ -6,7 +6,7 @@ module Api
       def index
         notifications = current_api_v1_user.passive_notifications # ログインユーザーが受け取る側の通知データを取得
                                            .where.not(visitor_id: current_api_v1_user.id) # 自分の投稿に対する通知は表示しない
-                                           .includes(visitor: { icon_image_attachment: :blob })
+                                           .includes(:tweet, :comment, visitor: { icon_image_attachment: :blob })
 
         render json: format_notifications(notifications)
 

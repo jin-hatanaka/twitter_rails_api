@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_14_031711) do
     t.bigint "visited_id", null: false
     t.bigint "tweet_id"
     t.bigint "comment_id"
-    t.string "action", default: "", null: false
+    t.integer "action", default: 0, null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
