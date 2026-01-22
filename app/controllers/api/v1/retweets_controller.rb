@@ -7,9 +7,9 @@ module Api
         retweet = current_api_v1_user.retweets.build(tweet_id: params[:tweet_id])
 
         if retweet.save
-          render josn: retweet, status: :created
+          render json: retweet, status: :created
         else
-          render json: retweet.error, status: :unprocessable_entity
+          render json: retweet.errors, status: :unprocessable_entity
         end
       end
 
