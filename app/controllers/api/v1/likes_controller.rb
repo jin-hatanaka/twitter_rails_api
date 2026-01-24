@@ -10,9 +10,9 @@ module Api
         if like.save
           # 通知作成メソッドの呼び出し
           tweet.create_notification!(current_api_v1_user, :like)
-          render josn: like, status: :created
+          render json: like, status: :created
         else
-          render json: like.error, status: :unprocessable_entity
+          render json: like.errors, status: :unprocessable_entity
         end
       end
 

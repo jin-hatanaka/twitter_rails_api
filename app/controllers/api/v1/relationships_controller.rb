@@ -10,9 +10,9 @@ module Api
         if follow.save
           # 通知作成メソッドの呼び出し
           user.create_notification_follow!(current_api_v1_user)
-          render josn: follow, status: :created
+          render json: follow, status: :created
         else
-          render json: follow.error, status: :unprocessable_entity
+          render json: follow.errors, status: :unprocessable_entity
         end
       end
 

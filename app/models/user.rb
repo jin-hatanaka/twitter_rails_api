@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :retweets, dependent: :destroy
   has_many :likes, dependent: :destroy
+  has_many :entries, dependent: :destroy
+  has_many :messages, dependent: :destroy
   has_one_attached :icon_image
   has_one_attached :header_image
 

@@ -26,7 +26,7 @@ module Api
           tweet.create_notification!(current_api_v1_user, :comment, comment_id: comment.id)
           render json: comment, status: :created
         else
-          render json: comment.error, status: :unprocessable_entity
+          render json: comment.errors, status: :unprocessable_entity
         end
       end
 
