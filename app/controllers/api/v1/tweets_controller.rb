@@ -73,7 +73,8 @@ module Api
             retweetCount: tweet.retweets.count,
             isRetweeted: tweet.retweets.exists?(user_id: current_api_v1_user),
             likeCount: tweet.likes.count,
-            isLiked: tweet.likes.exists?(user_id: current_api_v1_user)
+            isLiked: tweet.likes.exists?(user_id: current_api_v1_user),
+            isBookmarked: tweet.bookmarks.exists?(user_id: current_api_v1_user)
           }
         end
       end

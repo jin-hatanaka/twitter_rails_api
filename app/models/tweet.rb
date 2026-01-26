@@ -6,6 +6,7 @@ class Tweet < ApplicationRecord
   has_many :retweets, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
   has_many_attached :images
 
   # 画像のURL変換メソッド

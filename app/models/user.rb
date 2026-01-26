@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :entries, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
   has_one_attached :icon_image
   has_one_attached :header_image
 
@@ -35,6 +36,9 @@ class User < ApplicationRecord
   # 通知を受け取る側からのhas_mamy
   has_many :passive_notifications, class_name: 'Notification', foreign_key: 'visited_id', dependent: :destroy,
                                    inverse_of: :visited
+
+  # ユーザーがブックマークしたツイートをとってくる
+  has_many :bookmark_tweets, through: :bookmarks, source: :tweet
 
   # アイコン画像のURL変換メソッド
   def icon_image_url(width, height)

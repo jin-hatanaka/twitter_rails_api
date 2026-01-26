@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       resources :groups, only: %i[index create] do
         resources :messages, only: %i[index create]
       end
+      resources :bookmarks, only: %i[index create destroy]
     end
   end
 end
