@@ -22,6 +22,10 @@ Rails.application.routes.draw do
       end
       resources :images, only: %i[create]
       resources :users, only: %i[show update] do
+        collection do
+          delete 'withdraw'
+        end
+
         post 'follow', to: 'relationships#create'
         delete 'unfollow', to: 'relationships#destroy'
       end
