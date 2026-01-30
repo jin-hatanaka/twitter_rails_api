@@ -64,4 +64,10 @@ class User < ApplicationRecord
     )
     notification.save if notification.valid?
   end
+
+  # devise_token_auth が ログイン可否を判定するフック
+  # deleted: true になった瞬間 ログイン不可
+  def active_for_authentication?
+    super && !deleted
+  end
 end

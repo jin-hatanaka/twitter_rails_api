@@ -56,6 +56,19 @@ module Api
         end
       end
 
+      def withdraw
+        user = current_api_v1_user
+
+        ApplicationRecord.transaction do
+          user.update!(deleted: true)
+          user.tokens.clear
+        end
+
+        render json: { message: '退会しました' }, status: :ok
+      rescue StandardError => e
+        render json: { error: e.message }, status: :unprocessable_entity
+      end
+
       private
 
       def format_tweets(tweets)
